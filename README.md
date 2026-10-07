@@ -23,6 +23,9 @@ while (sigint_count < 3)
 로 세 번째 SIGINT가 올 때까지 대기
 io는 모두 main()에서 실행
 
+<img width="464" height="249" alt="image" src="https://github.com/user-attachments/assets/05993478-2cee-4a8b-a20d-ef54ee2533d5" />
+
+
 ## 사용한 프롬프트
 
 ### 1. 메인 룰 템플릿
