@@ -17,12 +17,12 @@
 #include <unistd.h>
 
 /* 핸들러와 main 이 함께 보는 변수. 중간에 바뀔 수 있으므로 volatile 을 붙인다. */
-static volatile sig_atomic_t got_sigint = 0;
+static volatile sig_atomic_t got_sigint_count = 0;
 
 static void handler(int sig)
 {
     (void)sig;        /* 인자를 쓰지 않을 때 경고를 막는 관용적 표현 */
-    got_sigint = 1;   /* 플래그만 켠다 — printf 같은 함수는 여기서 부르지 않는다 */
+    got_sigint_count++;   /* 플래그만 켠다 — printf 같은 함수는 여기서 부르지 않는다 */
 }
 
 int main(void)
