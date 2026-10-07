@@ -39,7 +39,7 @@ int main(void)
 
     printf("Ctrl+C 를 누르면 종료합니다 (PID %d)\n", getpid());
 
-    while (!got_sigint)   /* 플래그가 켜질 때까지 기다린다 */
+    while (got_sigint_count < 3)   /* 플래그가 켜질 때까지 기다린다 */
         pause();          /* 시그널이 올 때까지 잠들어 있는다(CPU 를 쓰지 않는다). 시그널이 오면 깨어나 루프 조건을 다시 검사 */
 
     printf("\nSIGINT 를 받았습니다. 정리하고 종료합니다.\n");
