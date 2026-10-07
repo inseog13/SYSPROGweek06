@@ -24,7 +24,7 @@ while (sigint_count < 3)
 io는 모두 main()에서 실행
 
 ## 실행 결과
-<img width="464" height="249" alt="image" src="https://github.com/user-attachments/assets/05993478-2cee-4a8b-a20d-ef54ee2533d5" />
+<img width="680" height="227" alt="image" src="https://github.com/user-attachments/assets/22be7658-c8e7-49a5-b4f2-0d10bca4b36a" />
 
 
 ## 사용한 프롬프트
