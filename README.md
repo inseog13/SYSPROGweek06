@@ -112,6 +112,7 @@ printf("5초 경과. SIGINT 대기 여부: %s\n",
 sigprocmask(SIG_SETMASK, &old, NULL)로 블록을 해제하면 핸들러가 실행되어 got이 1로 바뀌면 성공
 
 ## 실행 결과
+<img width="463" height="148" alt="image" src="https://github.com/user-attachments/assets/247ba498-5b9d-44b6-87e9-3490e0f2ebc0" />
 
 
 
