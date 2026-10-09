@@ -27,6 +27,15 @@ io는 모두 main()에서 실행
 <img width="680" height="227" alt="image" src="https://github.com/user-attachments/assets/22be7658-c8e7-49a5-b4f2-0d10bca4b36a" />
 
 
+## 1. 알람을 반복해야 하므로 간격, 반복 횟수가 필요
+
+기존의 `static volatile sig_atomic_t timeout = 0;` 을
+```
+static volatile sig_atomic_t interval_sec = 0;
+static volatile sig_atomic_t repeat_count = 0;
+```
+간격, 반복 횟수로 변형
+
 ## 사용한 프롬프트
 
 ### 1. 메인 룰 템플릿
