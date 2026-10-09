@@ -55,8 +55,18 @@ int main(int argc, char *argv[])
     fflush(stdout);   /* 프롬프트를 즉시 보이게 한다(버퍼에 남지 않도록) */
     alarm(interval_sec);   /* 3초 뒤 SIGALRM 예약 */
 
-    while (repeat_count > 0)
-        sleep(1);
+    sig_atomic_t previous_count = repeat_count;
+    
+    do {
+    sleep(1);
+
+    if (repeat_count != previous_count) {
+            printf("SIGALRM을 받았습니다. 남은 횟수: %d\n",
+                (int)repeat_count);
+            fflush(stdout);
+            previous_count = repeat_count;
+        }
+    } while (repeat_count > 0);
 
     alarm(0);   /* 입력을 받았으니 예약을 취소한다 */
     printf("타이머 종료\n");
