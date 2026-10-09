@@ -97,6 +97,24 @@ if (repeat_count != previous_count) 핸들러가 실행되어 횟수가 바뀌�
 <img width="381" height="151" alt="image" src="https://github.com/user-attachments/assets/16e8a566-10f5-491f-a17c-d99a9975a3db" />
 
 
+## 1. 잠깐 시그널 막기
+기존의 `printf("5초 경과. 눌렀는지 여부: %s\n", got ? "전달됨" : "아직 대기 중");`을
+```
+sigset_t pending;
+sigpending(&pending);
+printf("5초 경과. SIGINT 대기 여부: %s\n",
+       sigismember(&pending, SIGINT) ? "대기 중" : "대기 중인 시그널 없음");
+```
+로 전환해서 대기 중인 시그널 목록을 sigpending(&pending)으로 가져오고,
+목록에 SIGINT가 있는지 sigismember(&pending, SIGINT)로 확인
+
+실행할 때 5초 동안 Ctrl+C를 한 번 누르면 SIGINT가 대기 상태가 되고,
+sigprocmask(SIG_SETMASK, &old, NULL)로 블록을 해제하면 핸들러가 실행되어 got이 1로 바뀌면 성공
+
+## 실행 결과
+
+
+
 ## 사용한 프롬프트
 
 ### 1. 메인 룰 템플릿
@@ -114,6 +132,12 @@ if (repeat_count != previous_count) 핸들러가 실행되어 횟수가 바뀌�
 
 조건: 핸들러 안에서는 printf()를 사용하면 안됨. 그리고, 코드를 원본에서 너무 벗어나도록 작성하지 않을 것.
 
+
 문제: 2_alarm.c 를 변형해서 ./alarm <간격초> <반복횟수> 형식으로 작성되도록 할 것.
 
 조건: alarm 은 한 번만 울리므로, 핸들러가 처리한 뒤 다시 alarm(간격) 을 걸어야 됨. 코드를 원본에서 너무 벗어나도록 작성하지 않을 것.
+
+
+문제: 3_signal_block.c 를 변형해서 막힌 구간에서 Ctrl+C 를 누르고, 풀어 줄 때 전달되는지 확인하는 것.
+
+조건: sigprocmask(SIG_BLOCK, ...) → 작업 → SIG_SETMASK 로 복원하는 과정을 거치고, 막힌 동안의 시그널은 버려지지 않고 대기해야 함. 코드를 원본에서 너무 벗어나도록 작성하지 않을 것.
