@@ -39,7 +39,10 @@ int main(void)
 
     printf("지금부터 5초간 SIGINT 를 막습니다. Ctrl+C 를 눌러 보세요.\n");
     sleep(5);   /* 이 5초 동안 SIGINT 가 와도 핸들러가 즉시 실행되지 않고 커널에 대기(pending) 상태로 쌓인다 */
-    printf("5초 경과. 눌렀는지 여부: %s\n", got ? "전달됨" : "아직 대기 중");
+    sigset_t pending;
+    sigpending(&pending);
+    printf("5초 경과. SIGINT 대기 여부: %s\n",
+           sigismember(&pending, SIGINT) ? "대기 중" : "대기 중인 시그널 없음");
 
     /* 원래 마스크로 되돌린다 — 이 순간 대기 중이던 SIGINT 가 전달된다. */
     sigprocmask(SIG_SETMASK, &old, NULL);   /* 세 번째 인자 NULL: 지금 마스크(=old)는 저장할 필요 없다 */
