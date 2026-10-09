@@ -73,13 +73,28 @@ static void on_alarm(int sig)
 ```
 alarm(interval_sec);
 
-while (repeat_count > 0)
+//while (repeat_count > 0)
+//    sleep(1);
+sig_atomic_t previous_count = repeat_count;
+do {
     sleep(1);
+
+    if (repeat_count != previous_count) {
+        printf("SIGALRM을 받았습니다. 남은 횟수: %d\n",
+               (int)repeat_count);
+        fflush(stdout);
+        previous_count = repeat_count;
+    }
+} while (repeat_count > 0);
 ```
 alarm(interval_sec)으로 첫 번째 알람을 예약
 이후 repeat_count가 0보다 큰 동안 sleep(1)로 대기, 알람이 발생하면 핸들러가 repeat_count를 감소시키고, 마지막 알람 이후에는 반복문 종료
 
+추가로 5번 일어나는가 확인하기 위해 previous_count를 추가, 이전에 남아 있던 반복 횟수를 기억함
+if (repeat_count != previous_count) 핸들러가 실행되어 횟수가 바뀌었는지 확인
+
 ## 실행 결과
+<img width="381" height="151" alt="image" src="https://github.com/user-attachments/assets/16e8a566-10f5-491f-a17c-d99a9975a3db" />
 
 
 ## 사용한 프롬프트
