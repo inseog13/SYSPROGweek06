@@ -97,7 +97,7 @@ if (repeat_count != previous_count) 핸들러가 실행되어 횟수가 바뀌�
 <img width="381" height="151" alt="image" src="https://github.com/user-attachments/assets/16e8a566-10f5-491f-a17c-d99a9975a3db" />
 
 
-## 1. 잠깐 시그널 막기
+## 1. 잠깐 시그널 막기, Ctrl+C 를 누르고, 풀어 줄 때 전달되는지 확인
 기존의 `printf("5초 경과. 눌렀는지 여부: %s\n", got ? "전달됨" : "아직 대기 중");`을
 ```
 sigset_t pending;
